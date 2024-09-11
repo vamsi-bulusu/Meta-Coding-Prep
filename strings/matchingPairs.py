@@ -32,11 +32,6 @@ If i = 0 and j=1, s[0] and s[1] are swapped, making s = "nmo", which shares only
 """
 
 
-
-
-
-
-
 import math
 
 def matching_pairs(s, t):
