@@ -37,37 +37,34 @@ If i = 0 and j=1, s[0] and s[1] are swapped, making s = "nmo", which shares only
 
 
 
-
 import math
 
 def matching_pairs(s, t):
-  matching_pairs = 0
-  sm, tm = dict(), dict()
   
+  ss, ts, hs = set(), set(), set()
+  onePairMatch = 0
   for index in range(len(s)):
-    if s[index] == t[index]:
-      matching_pairs += 1
+    if s[index] != t[index]:
+      hs.add((s[index], t[index]))
+      if (t[index] in ss) or (s[index] in ts):
+        onePairMatch = 1
+      ss.add(s[index])
+      ts.add(t[index])
       
-  #  case 1: when you have no unmatched pairs: match
-  if matching_pairs == len(s):
-    return matching_pairs - 2
+      
+  #  case 1: when you have no unmatched pairs: 
+  if len(hs) == 0:
+    return len(s) - 2
   
-  one_match = 0
-  for i in range(len(s)):
-    if s[i] != t[i]:
-      if s[i] in tm and t[i] in sm and sm[t[i]] == tm[s[i]]:
-        return matching_pairs + 2
-      elif s[i] in tm or t[i] in sm:
-        one_match = 1
-        
-      sm[s[i]] = i
-      tm[t[i]] = i
-   
-  return matching_pairs + one_match
-    
+  matchingPairs = len(s) - len(hs)
   
+  for pair in hs:
+    if (pair[1], pair[0]) in hs:
+      return matchingPairs + 2
   
 
+  return matchingPairs + onePairMatch
+    
 # These are the tests we use to determine if the solution is correct.
 # You can add your own at the bottom.
 
